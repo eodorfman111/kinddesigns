@@ -145,8 +145,8 @@ what the dashboard would populate with once that footage is available.
 
 m = folium.Map(
     location=[25.87, -80.155], zoom_start=11,
-    tiles="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    attr="Esri World Imagery",
+    tiles="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}",
+    attr="Esri Ocean Basemap",
 )
 all_lats = [s["lat"] for s in SITES]
 all_lons = [s["lon"] for s in SITES]
