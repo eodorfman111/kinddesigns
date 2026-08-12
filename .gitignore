@@ -2,4 +2,7 @@ __pycache__/
 *.pyc
 models/
 footage/
+frames_for_labeling/
+label_review/
+extract_candidates.py
 kinddesigns_boxes_overlay.mp4

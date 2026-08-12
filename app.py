@@ -119,11 +119,14 @@ with col_stat:
     <div class="glass-card" style="height:100%">
       <div class="title">\U0001F3AF What's live here</div>
       <div class="body">
-        Real-time detection boxes + confidence scores, per-frame fish count.<br><br>
-        Model: custom-trained YOLO detector (marine footage), same pipeline behind
-        Leo's other CV monitoring builds.<br><br>
-        <b>Not yet live:</b> species-level ID — today's model flags "fish," not species.
-        That's the next model iteration, trained on your footage.
+        Real-time <b>species-level</b> detection with tracking — Sergeant Major, White Grunt,
+        French Grunt, Porkfish, Bluehead Wrasse, Parrotfish — plus per-frame count.<br><br>
+        Model: custom YOLO26 detector trained on hand-labeled frames from this clip,
+        with ByteTrack so detections persist across frames instead of flickering.<br><br>
+        <b>Honest caveat:</b> trained on ~120 frames from one clip, not a general-purpose
+        classifier yet. Sergeant Major and White Grunt (the two most common species here)
+        are reliable; Porkfish and Parrotfish had very few training examples and will miss
+        or misfire more often. More labeled footage fixes that.
       </div>
     </div>
     """, unsafe_allow_html=True)
@@ -194,11 +197,13 @@ st.dataframe(display_df, use_container_width=True, hide_index=True)
 # ── Capability cards ─────────────────────────────────────────────────────────
 st.markdown("<div class='sec'>Pipeline Capabilities</div>", unsafe_allow_html=True)
 cards = [
-    ("\U0001F41F", "Fish detection & counting", "live",
-     "Runs on real footage right now — the video above. Per-frame counts, confidence scores."),
-    ("\U0001F3F7️", "Species-level classification", "roadmap",
-     "Today's model flags <b>fish</b>, not species. A model trained on your GoPro footage (or "
-     "labeled reference images) would identify sheepshead, grunt, snapper, etc. individually."),
+    ("\U0001F41F", "Fish detection & tracking", "live",
+     "Runs on real footage right now — the video above. Per-frame counts, confidence scores, "
+     "ByteTrack so individual fish are tracked across frames instead of re-detected from scratch."),
+    ("\U0001F3F7️", "Species-level classification", "live",
+     "6 species trained from ~120 hand-labeled frames of this clip: Sergeant Major, White Grunt, "
+     "French Grunt, Porkfish, Bluehead Wrasse, Parrotfish. The two dominant species are reliable; "
+     "the thin-data ones need more labeled footage to firm up — same process, just more frames."),
     ("\U0001F5FA️", "Cross-site GIS dashboard", "roadmap",
      "Aggregate biodiversity view across every wall — shown above as a mockup. Once real "
      "per-site data exists, this becomes live and could be shown to city planners and property "
