@@ -102,10 +102,10 @@ st.markdown("<div class='sec'>The Real Part</div>", unsafe_allow_html=True)
 st.markdown('<span class="real-badge">✓ Real inference, real footage</span>', unsafe_allow_html=True)
 st.markdown("""
 <div class="sec-sub">
-This is a live YOLO fish detector running on public South Florida reef footage —
-<b>not</b> footage from an actual Living Seawall™. It's here to show the pipeline
-genuinely detects fish against rocky, colonized structure, the same kind of scene
-a GoPro on your wall would see.
+This is a live YOLO species detector (6 species, trained + tracked) running on public
+South Florida reef footage — <b>not</b> footage from an actual Living Seawall™. It's here
+to show the pipeline genuinely identifies and tracks fish against rocky, colonized
+structure, the same kind of scene a GoPro on your wall would see.
 </div>
 """, unsafe_allow_html=True)
 
