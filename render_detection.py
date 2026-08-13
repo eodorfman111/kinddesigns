@@ -23,13 +23,16 @@ MODEL_PATH = BASE / "models" / "species_v1.pt"
 OVERLAY_OUT = BASE / "kinddesigns_boxes_overlay.mp4"
 WEB_OUT = BASE / "kinddesigns_boxes_web.mp4"
 
+# All deep/saturated (not pale) so the label's white text stays readable
+# against every one of them — pale colors (near-white, light yellow) made
+# labels invisible white-on-white in the first pass.
 CLASS_COLORS_HEX = {
-    "Bluehead Wrasse": "#38B4DB",
-    "French Grunt": "#F0C456",
-    "Parrotfish": "#E65AAC",
-    "Porkfish": "#FFC83C",
-    "Sergeant major": "#B4DB38",
-    "White Grunt": "#C8C8C8",
+    "Bluehead Wrasse": "#2563EB",   # blue
+    "French Grunt": "#EA580C",      # deep orange
+    "Parrotfish": "#DB2777",        # deep magenta/pink
+    "Porkfish": "#CA8A04",          # amber/gold, not pale yellow
+    "Sergeant major": "#DC2626",    # deep red — pops against teal water
+    "White Grunt": "#57534E",       # warm dark gray, not near-white
 }
 COUNT_SMOOTH_FRAMES = 15
 CONF = 0.12          # lower than single-frame use — ByteTrack's own confirmation
@@ -47,9 +50,9 @@ def run():
 
     tracker = sv.ByteTrack(lost_track_buffer=LOST_TRACK_BUFFER,
                             minimum_consecutive_frames=MINIMUM_CONSECUTIVE_FRAMES)
-    box_annotator = sv.BoxAnnotator(color=palette, thickness=2)
-    label_annotator = sv.LabelAnnotator(color=palette, text_scale=0.4, text_thickness=1,
-                                         text_padding=3, smart_position=True)
+    box_annotator = sv.BoxAnnotator(color=palette, thickness=3)
+    label_annotator = sv.LabelAnnotator(color=palette, text_scale=0.65, text_thickness=2,
+                                         text_padding=6, smart_position=True)
 
     cap = cv2.VideoCapture(str(SOURCE))
     fps = cap.get(cv2.CAP_PROP_FPS) or 30
