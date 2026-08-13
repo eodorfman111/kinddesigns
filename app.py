@@ -41,7 +41,24 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {{
 }}
 [data-testid="stHeader"], [data-testid="stToolbar"] {{ display: none !important; }}
 section[data-testid="stSidebar"] {{ display: none; }}
-.block-container {{ padding: 2rem 2.5rem 4rem !important; max-width: 1180px !important; }}
+.block-container {{ padding: 2rem 2.5rem 4rem !important; max-width: 1180px !important; position: relative; z-index: 1; }}
+
+@keyframes gradientBreathe {{
+    0%, 100% {{ transform: scale(1) translate(0, 0); opacity: 0.6; }}
+    50%      {{ transform: scale(1.12) translate(-1%, 1%); opacity: 0.85; }}
+}}
+.ambient-gradient-bg {{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(55% 45% at 22% 15%, #2dd4bf3d 0%, transparent 65%),
+        radial-gradient(50% 40% at 82% 8%, #38bdf82e 0%, transparent 60%),
+        radial-gradient(45% 40% at 55% 95%, #14b8a624 0%, transparent 65%);
+    filter: blur(70px);
+    animation: gradientBreathe 12s ease-in-out infinite;
+}}
 
 @keyframes fadeInUp {{
     from {{ opacity: 0; transform: translateY(14px); }}
@@ -109,6 +126,7 @@ section[data-testid="stSidebar"] {{ display: none; }}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
+st.markdown('<div class="ambient-gradient-bg"></div>', unsafe_allow_html=True)
 
 # ── Hero ───────────────────────────────────────────────────────────────────
 st.markdown(f"""
