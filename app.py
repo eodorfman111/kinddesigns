@@ -22,6 +22,7 @@ import pandas as pd
 import plotly.express as px
 import folium
 from streamlit_folium import st_folium
+from streamlit_extras.stylable_container import stylable_container
 
 from sites import SITES
 
@@ -42,25 +43,44 @@ html, body, .stApp, [data-testid="stAppViewContainer"] {{
 section[data-testid="stSidebar"] {{ display: none; }}
 .block-container {{ padding: 2rem 2.5rem 4rem !important; max-width: 1180px !important; }}
 
+@keyframes fadeInUp {{
+    from {{ opacity: 0; transform: translateY(14px); }}
+    to   {{ opacity: 1; transform: translateY(0); }}
+}}
+@keyframes softPulse {{
+    0%, 100% {{ box-shadow: 0 0 0 0 rgba(34,197,94,0.35); }}
+    50%      {{ box-shadow: 0 0 0 6px rgba(34,197,94,0); }}
+}}
+
 .badge {{ display:inline-block;background:{ACCENT}1f;color:{ACCENT};font-size:0.68rem;
     font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;
-    border-radius:999px;border:1px solid #1e6f66;margin-bottom:16px; }}
+    border-radius:999px;border:1px solid #1e6f66;margin-bottom:16px;
+    animation: fadeInUp 0.5s ease-out both; }}
 .illustrative-badge {{ display:inline-block;background:rgba(245,158,11,0.12);color:#f59e0b;
     font-size:0.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
     padding:4px 12px;border-radius:999px;border:1px solid rgba(245,158,11,0.35);margin-bottom:14px; }}
 .real-badge {{ display:inline-block;background:rgba(34,197,94,0.12);color:#22c55e;
     font-size:0.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-    padding:4px 12px;border-radius:999px;border:1px solid rgba(34,197,94,0.35);margin-bottom:14px; }}
+    padding:4px 12px;border-radius:999px;border:1px solid rgba(34,197,94,0.35);margin-bottom:14px;
+    animation: softPulse 2.4s ease-in-out infinite; }}
 
 .sec {{ font-size: 0.65rem; text-transform: uppercase; letter-spacing: .18em;
        color: #2a6058; font-weight: 700; margin: 40px 0 6px; }}
 .sec-sub {{ font-size: 0.82rem; color: #6b8f89; margin-bottom: 18px; line-height: 1.6; }}
 
 .vid-card {{ border-radius: 12px; overflow: hidden; border: 1px solid #123a34;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.35); }}
+            box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+            animation: fadeInUp 0.7s ease-out both;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease; }}
+.vid-card:hover {{ border-color: {ACCENT}80; box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+                   transform: translateY(-2px); }}
 
 .glass-card {{ background: #0d1f1c; border: 1px solid #123a34; border-radius: 12px;
-              padding: 18px 20px; margin-bottom: 14px; position: relative; }}
+              padding: 18px 20px; margin-bottom: 14px; position: relative;
+              animation: fadeInUp 0.6s ease-out both;
+              transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }}
+.glass-card:hover {{ border-color: {ACCENT}66; transform: translateY(-3px);
+                     box-shadow: 0 10px 28px rgba(0,0,0,0.3); }}
 .glass-card .title {{ color: {ACCENT}; font-size: 0.85rem; font-weight: 700; margin-bottom: 6px;
                       padding-right: 78px; }}
 .glass-card .body {{ color: #6b8f89; font-size: 0.78rem; line-height: 1.75; }}
@@ -73,18 +93,26 @@ section[data-testid="stSidebar"] {{ display: none; }}
 
 .cta-card {{ background: linear-gradient(135deg, {ACCENT}1a, rgba(13,31,28,0.4));
             border: 1px solid {ACCENT}4d; border-radius: 14px;
-            padding: 2rem; text-align: center; margin-top: 8px; }}
+            padding: 2rem; text-align: center; margin-top: 8px;
+            animation: fadeInUp 0.7s ease-out both;
+            transition: border-color 0.25s ease, transform 0.25s ease; }}
+.cta-card:hover {{ border-color: {ACCENT}99; transform: translateY(-2px); }}
 .cta-card .h {{ color: #f1f5f9; font-size: 1.1rem; font-weight: 800; margin-bottom: 8px; }}
 .cta-card .b {{ color: #6b8f89; font-size: 0.82rem; line-height: 1.7; margin-bottom: 4px; }}
 .cta-card .e {{ color: {ACCENT}; font-size: 0.9rem; font-weight: 700; margin-top: 10px; }}
+
+.hero-card {{ padding:36px 36px 32px; background:linear-gradient(160deg,#0e2b26,#0a1e1a 65%);
+             border:1px solid #1e6f66; border-radius:18px; margin-bottom:16px;
+             animation: fadeInUp 0.5s ease-out both;
+             transition: border-color 0.3s ease, box-shadow 0.3s ease; }}
+.hero-card:hover {{ border-color: {ACCENT}80; box-shadow: 0 16px 48px rgba(0,0,0,0.35); }}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
 
 # ── Hero ───────────────────────────────────────────────────────────────────
 st.markdown(f"""
-<div style="padding:36px 36px 32px;background:linear-gradient(160deg,#0e2b26,#0a1e1a 65%);
-            border:1px solid #1e6f66;border-radius:18px;margin-bottom:16px">
+<div class="hero-card">
   <div class="badge">\U0001F41F Concept Demo · Not Affiliated With Kind Designs</div>
   <div style="font-size:2.1rem;font-weight:800;color:#f8fafc;letter-spacing:-0.04em;line-height:1.15;max-width:720px">
     What your GoPro monitoring program could look like running through automated detection
@@ -163,7 +191,23 @@ for s in SITES:
         popup=folium.Popup(popup_html, max_width=280),
         tooltip=s["name"],
     ).add_to(m)
-st_folium(m, width=1130, height=420, returned_objects=[])
+
+with stylable_container(
+    key="map_container",
+    css_styles=f"""
+    {{
+        border: 1px solid #123a34;
+        border-radius: 12px;
+        overflow: hidden;
+        animation: fadeInUp 0.7s ease-out both;
+        transition: border-color 0.25s ease;
+    }}
+    &:hover {{
+        border-color: {ACCENT}80;
+    }}
+    """,
+):
+    st_folium(m, width=1130, height=420, returned_objects=[])
 
 df = pd.DataFrame(SITES)
 col_a, col_b = st.columns(2, gap="medium")
