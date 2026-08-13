@@ -155,27 +155,25 @@ structure, the same kind of scene a GoPro on your wall would see.
 </div>
 """, unsafe_allow_html=True)
 
-col_v, col_stat = st.columns([2, 1], gap="medium")
-with col_v:
-    st.markdown("<div class='vid-card'>", unsafe_allow_html=True)
-    st.video(str(BASE / "kinddesigns_boxes_web.mp4"), loop=True, autoplay=True, muted=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-with col_stat:
-    st.markdown(f"""
-    <div class="glass-card" style="height:100%">
-      <div class="title">\U0001F3AF What's live here</div>
-      <div class="body">
-        Real-time <b>species-level</b> detection with tracking — Sergeant Major, White Grunt,
-        French Grunt, Porkfish, Bluehead Wrasse, Parrotfish — plus per-frame count.<br><br>
-        Model: custom YOLO26 detector trained on hand-labeled frames from this clip,
-        with ByteTrack so detections persist across frames instead of flickering.<br><br>
-        <b>Honest caveat:</b> trained on ~120 frames from one clip, not a general-purpose
-        classifier yet. Sergeant Major and White Grunt (the two most common species here)
-        are reliable; Porkfish and Parrotfish had very few training examples and will miss
-        or misfire more often. More labeled footage fixes that.
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown("<div class='vid-card'>", unsafe_allow_html=True)
+st.video(str(BASE / "kinddesigns_boxes_web.mp4"), loop=True, autoplay=True, muted=True)
+st.markdown("</div>", unsafe_allow_html=True)
+
+st.markdown(f"""
+<div class="glass-card" style="margin-top:14px">
+  <div class="title">\U0001F3AF What's live here</div>
+  <div class="body">
+    Real-time <b>species-level</b> detection with tracking — Sergeant Major, White Grunt,
+    French Grunt, Porkfish, Bluehead Wrasse, Parrotfish — plus per-frame count.<br><br>
+    Model: custom YOLO26 detector trained on hand-labeled frames from this clip,
+    with ByteTrack so detections persist across frames instead of flickering.<br><br>
+    <b>Honest caveat:</b> trained on ~120 frames from one clip, not a general-purpose
+    classifier yet. Sergeant Major and White Grunt (the two most common species here)
+    are reliable; Porkfish and Parrotfish had very few training examples and will miss
+    or misfire more often. More labeled footage fixes that.
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
 # ── Illustrative map ─────────────────────────────────────────────────────────
 st.markdown("<div class='sec'>Product Vision — Per-Site Dashboard</div>", unsafe_allow_html=True)
