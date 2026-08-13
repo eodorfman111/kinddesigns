@@ -80,7 +80,7 @@ SITES = [
     {
         "name": "Bayfront Park",
         "area": "Miami Shores Village",
-        "lat": 25.8737, "lon": -80.1889,
+        "lat": 25.8681, "lon": -80.1705,
         "installed": 2026,
         "months_monitored": 1,
         "species": ["Pinfish"],
@@ -91,7 +91,7 @@ SITES = [
     {
         "name": "Bryan Place",
         "area": "Fort Lauderdale",
-        "lat": 26.1224, "lon": -80.1373,
+        "lat": 26.1224, "lon": -80.1028,
         "installed": 2025,
         "months_monitored": 5,
         "species": ["Sergeant Major", "Gray Snapper", "French Grunt"],

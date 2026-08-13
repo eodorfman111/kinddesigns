@@ -171,27 +171,36 @@ what the dashboard would populate with once that footage is available.
 </div>
 """, unsafe_allow_html=True)
 
-m = folium.Map(location=[25.815, -80.16], zoom_start=12, tiles="CartoDB dark_matter")
+m = folium.Map(
+    location=[25.87, -80.155], zoom_start=11,
+    tiles="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}",
+    attr="Esri Ocean Basemap",
+)
+all_lats = [s["lat"] for s in SITES]
+all_lons = [s["lon"] for s in SITES]
+m.fit_bounds([[min(all_lats) - 0.02, min(all_lons) - 0.02],
+              [max(all_lats) + 0.02, max(all_lons) + 0.02]])
+
 for s in SITES:
     popup_html = f"""
-    <div style="font-family:Inter,sans-serif;min-width:200px">
-      <b>{s['name']}</b> — {s['area']}<br>
-      <span style="color:#888;font-size:11px">Illustrative data</span><br><br>
-      Installed: {s['installed']} ({s['months_monitored']} mo monitored)<br>
-      Diversity index: {s['diversity_index']}<br>
-      Avg fish count/session: {s['fish_count_avg']}<br>
-      Species: {', '.join(s['species'])}<br>
-      Inverts: {', '.join(s['invertebrates'])}
+    <div style="font-family:Inter,sans-serif;min-width:220px;padding:4px">
+      <div style="font-size:14px;font-weight:700;color:#0e7490;margin-bottom:4px">{s['name']}</div>
+      <div style="font-size:11px;color:#aaa;margin-bottom:8px">{s['area']} · Installed {s['installed']}</div>
+      <div style="font-size:12px;margin-bottom:2px"><b>Diversity index:</b> {s['diversity_index']}</div>
+      <div style="font-size:12px;margin-bottom:2px"><b>Avg fish/session:</b> {s['fish_count_avg']}</div>
+      <div style="font-size:12px;margin-bottom:2px"><b>Species:</b> {', '.join(s['species'])}</div>
+      <div style="font-size:12px;margin-bottom:6px"><b>Inverts:</b> {', '.join(s['invertebrates'])}</div>
+      <div style="font-size:10px;color:#f59e0b">⚠ Illustrative data</div>
     </div>
     """
     folium.CircleMarker(
         location=[s["lat"], s["lon"]],
-        radius=8 + s["diversity_index"] * 10,
-        color=ACCENT, fill=True, fill_color=ACCENT, fill_opacity=0.6, weight=2,
-        popup=folium.Popup(popup_html, max_width=280),
-        tooltip=s["name"],
+        radius=10 + s["diversity_index"] * 12,
+        color="#ffffff", weight=2,
+        fill=True, fill_color=ACCENT, fill_opacity=0.75,
+        popup=folium.Popup(popup_html, max_width=290),
+        tooltip=f"{s['name']} — diversity {s['diversity_index']}",
     ).add_to(m)
-
 with stylable_container(
     key="map_container",
     css_styles=f"""
@@ -207,7 +216,7 @@ with stylable_container(
     }}
     """,
 ):
-    st_folium(m, width=1130, height=420, returned_objects=[])
+    st_folium(m, width=1130, height=460, returned_objects=[])
 
 df = pd.DataFrame(SITES)
 col_a, col_b = st.columns(2, gap="medium")
